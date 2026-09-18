@@ -26,6 +26,10 @@ curl --fail --silent --show-error --location --retry 3 --connect-timeout 10 "$RE
 [[ -s "$TMP" ]] || { echo "خطا: دانلود تمپلت خالی است." >&2; exit 1; }
 
 "${SUDO[@]}" mkdir -p "$PREFIX"
+"${SUDO[@]}" mkdir -p "$PREFIX/assets"
+curl --fail --silent --show-error --location --retry 3 --connect-timeout 10 "$REPO_RAW/assets/nova-hero.jpg" -o "$TMP.hero"
+[[ -s "$TMP.hero" ]] || { echo "خطا: دانلود asset تصویری ناموفق بود." >&2; exit 1; }
+"${SUDO[@]}" install -m 0644 "$TMP.hero" "$PREFIX/assets/nova-hero.jpg"
 for name in index.html sub.html; do
   if [[ -f "$PREFIX/$name" ]]; then
     "${SUDO[@]}" cp -a "$PREFIX/$name" "$PREFIX/$name.bak.$(date +%Y%m%d%H%M%S)"
@@ -34,7 +38,7 @@ for name in index.html sub.html; do
 done
 "${SUDO[@]}" chmod 0755 "$PREFIX"
 
-[[ -s "$PREFIX/index.html" && -s "$PREFIX/sub.html" ]] || { echo "خطا: بررسی نصب ناموفق بود." >&2; exit 1; }
+[[ -s "$PREFIX/index.html" && -s "$PREFIX/sub.html" && -s "$PREFIX/assets/nova-hero.jpg" ]] || { echo "خطا: بررسی نصب ناموفق بود." >&2; exit 1; }
 
 echo
 echo "تمپلت مدرن با موفقیت نصب شد: $PREFIX"

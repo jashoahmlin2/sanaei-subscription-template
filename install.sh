@@ -3,6 +3,7 @@ set -Eeuo pipefail
 
 PREFIX="${SUB_THEME_DIR:-/etc/3x-ui/sub_templates/modern}"
 REPO_RAW="${SUB_THEME_RAW_BASE:-https://raw.githubusercontent.com/jashoahmlin2/sanaei-subscription-template/main}"
+ASSET_RAW="${SUB_THEME_ASSET_BASE:-https://github.com/jashoahmlin2/sanaei-subscription-template/raw/refs/heads/main}"
 TMP="$(mktemp)"
 trap 'rm -f "$TMP"' EXIT
 
@@ -27,7 +28,7 @@ curl --fail --silent --show-error --location --retry 3 --connect-timeout 10 "$RE
 
 "${SUDO[@]}" mkdir -p "$PREFIX"
 "${SUDO[@]}" mkdir -p "$PREFIX/assets"
-curl --fail --silent --show-error --location --retry 3 --connect-timeout 10 "$REPO_RAW/assets/nova-hero.jpg" -o "$TMP.hero"
+curl --fail --silent --show-error --location --retry 3 --connect-timeout 10 "$ASSET_RAW/assets/nova-hero.jpg" -o "$TMP.hero"
 [[ -s "$TMP.hero" ]] || { echo "خطا: دانلود asset تصویری ناموفق بود." >&2; exit 1; }
 "${SUDO[@]}" install -m 0644 "$TMP.hero" "$PREFIX/assets/nova-hero.jpg"
 for name in index.html sub.html; do

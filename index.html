@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>{{if .subTitle}}{{.subTitle}}{{else}}Subscription{{end}}</title>
+  <style>
+    :root{--bg:#080b14;--panel:rgba(18,24,39,.76);--line:rgba(148,163,184,.18);--text:#f8fafc;--muted:#94a3b8;--cyan:#22d3ee;--violet:#8b5cf6;--green:#34d399;--red:#fb7185;--shadow:0 24px 80px rgba(0,0,0,.32)}
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;color:var(--text);font-family:Tahoma,"Segoe UI",sans-serif;background:radial-gradient(circle at 10% 0%,#172554 0,transparent 35%),radial-gradient(circle at 90% 10%,#312e81 0,transparent 32%),var(--bg)}
+    .wrap{width:min(1080px,calc(100% - 32px));margin:auto;padding:42px 0 56px}.hero{display:flex;justify-content:space-between;gap:24px;align-items:flex-start;margin-bottom:28px}.eyebrow{color:var(--cyan);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase}.hero h1{font-size:clamp(27px,5vw,48px);line-height:1.15;margin:10px 0 8px}.hero p{color:var(--muted);margin:0;max-width:650px;line-height:1.9}.badge{border:1px solid var(--line);background:rgba(15,23,42,.55);border-radius:999px;padding:10px 15px;white-space:nowrap;color:var(--muted);font-size:13px}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 14px var(--green);margin-left:7px}.dot.off{background:var(--red);box-shadow:0 0 14px var(--red)}
+    .grid{display:grid;grid-template-columns:1.25fr .75fr;gap:18px}.card{background:var(--panel);border:1px solid var(--line);box-shadow:var(--shadow);backdrop-filter:blur(18px);border-radius:24px;padding:24px}.card h2{font-size:17px;margin:0 0 20px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.stat{padding:17px;border:1px solid var(--line);border-radius:17px;background:rgba(15,23,42,.5)}.stat small{display:block;color:var(--muted);font-size:12px;margin-bottom:8px}.stat strong{font-size:18px;word-break:break-word}.meter{height:13px;border-radius:99px;background:#1e293b;overflow:hidden;margin:22px 0 10px}.meter>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--violet),var(--cyan));border-radius:inherit;transition:width .5s}.meterline{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}.btn{border:1px solid var(--line);border-radius:12px;background:#111827;color:var(--text);padding:11px 15px;cursor:pointer;font:inherit;font-size:13px;transition:.2s}.btn:hover{border-color:var(--cyan);transform:translateY(-1px)}.btn.primary{background:linear-gradient(135deg,#4f46e5,#0891b2);border-color:transparent}.meta{display:grid;gap:13px}.meta div{display:flex;justify-content:space-between;gap:16px;padding-bottom:13px;border-bottom:1px solid var(--line);font-size:13px}.meta div:last-child{border:0;padding-bottom:0}.meta span:first-child{color:var(--muted)}.announce{margin-top:18px;border-right:3px solid var(--cyan);padding:12px 15px;color:#cbd5e1;background:rgba(34,211,238,.06);line-height:1.8;font-size:13px}.links{grid-column:1/-1}.linkrow{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:14px;padding:12px;margin-top:10px;background:rgba(15,23,42,.4)}.linkrow code{direction:ltr;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;color:#c4b5fd;font-size:11px}.empty{color:var(--muted);font-size:13px}.foot{margin-top:24px;text-align:center;color:var(--muted);font-size:11px}.foot a{color:var(--cyan)}@media(max-width:760px){.wrap{width:min(100% - 20px,620px);padding-top:24px}.hero{display:block}.badge{display:inline-block;margin-top:18px}.grid{grid-template-columns:1fr}.links{grid-column:auto}.stats{grid-template-columns:1fr}.card{padding:19px}.linkrow{align-items:flex-start;flex-wrap:wrap}.linkrow code{flex-basis:100%;order:2}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="hero">
+      <section>
+        <div class="eyebrow">SECURE CONNECTION PROFILE</div>
+        <h1>{{if .subTitle}}{{.subTitle}}{{else}}اشتراک امن شما{{end}}</h1>
+        <p>تمام اطلاعات اتصال شما در یک نمای سریع و امن؛ برای بهترین تجربه، این اشتراک را در کلاینت موردعلاقه‌تان اضافه کنید.</p>
+      </section>
+      <div class="badge"><i id="statusDot" class="dot{{if not .isOnline}} off{{end}}"></i><span id="statusText">{{if .isOnline}}آنلاین{{else}}آفلاین{{end}}</span></div>
+    </header>
+    <section class="grid">
+      <article class="card">
+        <h2>مصرف اشتراک</h2>
+        <div class="stats"><div class="stat"><small>مصرف‌شده</small><strong id="used">{{.used}}</strong></div><div class="stat"><small>باقی‌مانده</small><strong id="remained">{{.remained}}</strong></div><div class="stat"><small>سقف کل</small><strong>{{.total}}</strong></div></div>
+        <div class="meter"><i id="meter"></i></div><div class="meterline"><span id="percent">در حال محاسبه…</span><span id="lastUpdate">به‌روزرسانی خودکار</span></div>
+        <div class="actions"><a class="btn primary" href="{{.subUrl}}">دریافت اشتراک</a>{{if .subClashUrl}}<a class="btn" href="{{.subClashUrl}}">Clash / Mihomo</a>{{end}}{{if .subJsonUrl}}<a class="btn" href="{{.subJsonUrl}}">JSON</a>{{end}}</div>
+      </article>
+      <article class="card"><h2>جزئیات</h2><div class="meta"><div><span>وضعیت حساب</span><strong>{{if .enabled}}فعال{{else}}غیرفعال{{end}}</strong></div><div><span>انقضا</span><strong id="expire">در حال محاسبه…</strong></div><div><span>آخرین اتصال</span><strong id="lastOnline">در حال محاسبه…</strong></div></div>{{if .announce}}<div class="announce">{{.announce}}</div>{{end}}</article>
+      <article class="card links"><h2>لینک‌های اتصال <span style="color:var(--muted);font-size:12px;font-weight:normal">({{len .links}} مورد)</span></h2>{{range $i, $link := .links}}<div class="linkrow"><span style="color:var(--muted);font-size:12px">#{{$i | printf "%02d"}}</span><code id="link-{{$i}}">{{$link}}</code><button class="btn" type="button" onclick="copyLink('link-{{$i}}',this)">کپی</button></div>{{else}}<p class="empty">لینکی برای نمایش وجود ندارد.</p>{{end}}</article>
+    </section>
+    <footer class="foot">شناسه اشتراک: <span dir="ltr">{{.sId}}</span>{{if .subSupportUrl}} · <a href="{{.subSupportUrl}}">پشتیبانی</a>{{end}}</footer>
+  </main>
+  <script>
+    const total=Number({{.totalByte}})||0, used=Number({{.downloadByte}})+Number({{.uploadByte}}), expire=Number({{.expire}}), lastOnline=Number({{.lastOnline}});
+    const $=id=>document.getElementById(id); const fa=n=>new Intl.NumberFormat('fa-IR').format(n);
+    function dateText(ms){if(!ms)return 'هرگز';return new Intl.DateTimeFormat('fa-IR',{dateStyle:'medium',timeStyle:'short'}).format(new Date(ms));}
+    const pct=total>0?Math.min(100,Math.max(0,used/total*100)):0; $('meter').style.width=pct+'%'; $('percent').textContent=total?fa(pct.toFixed(1))+'٪ مصرف':'بدون محدودیت'; $('expire').textContent=expire?dateText(expire*1000):'بدون انقضا'; $('lastOnline').textContent=dateText(lastOnline);
+    async function copyLink(id,btn){try{await navigator.clipboard.writeText($(id).textContent);const old=btn.textContent;btn.textContent='کپی شد';setTimeout(()=>btn.textContent=old,1400)}catch(e){alert('کپی خودکار در این مرورگر مجاز نیست.')}}
+    async function refresh(){try{const r=await fetch(window.location.pathname+'?format=info',{cache:'no-store'});if(!r.ok)return;const x=await r.json();$('used').textContent=x.used;$('remained').textContent=x.remained;$('statusText').textContent=x.isOnline?'آنلاین':'آفلاین';$('statusDot').classList.toggle('off',!x.isOnline);$('lastOnline').textContent=dateText(x.lastOnline);$('lastUpdate').textContent='آخرین بروزرسانی: '+new Intl.DateTimeFormat('fa-IR',{timeStyle:'short'}).format(new Date())}catch(e){}}
+    refresh();setInterval(refresh,30000);
+  </script>
+</body>
+</html>

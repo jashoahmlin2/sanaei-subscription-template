@@ -1,0 +1,17 @@
+from pathlib import Path
+root=Path('/home/ubuntu/sanaei-subscription-template')
+for name in ('index.html','sub.html'):
+ p=root/name; s=p.read_text()
+ s=s.replace('url("assets/roman-hero.jpg")','url("assets/pasargadae-hero.jpg")')
+ s=s.replace('background:var(--ink);color:var(--ink);font-family:Tahoma,Arial,sans-serif','background:var(--ink);color:var(--ink);font-family:Vazirmatn,IRANSans,Tahoma,Arial,sans-serif')
+ s=s.replace('--ink:#120b08;--paper:#f5ead4;--paper2:#ead7b6;--gold:#a97832;--gold2:#d4a653;--wine:#641f23;--muted:#745f4a;--line:#d7bd91','--ink:#061326;--paper:#f3ead6;--paper2:#e2d0aa;--gold:#c4933f;--gold2:#e9c46a;--wine:#123f68;--muted:#65748a;--line:#c9b582')
+ s=s.replace('IMPERIVM · SECURE CONNECTIONS','PASARGADAE · SECURE CONNECTIONS')
+ s=s.replace('IMPERIVM SUBSCRIPTION','PASARGADAE SUBSCRIPTION')
+ s=s.replace('background:var(--wine);color:#fff3d4','background:linear-gradient(110deg,#0d4777,#1799a8,#0d4777);background-size:220% 100%;color:#fff3d4;animation:shimmer 3s linear infinite')
+ s=s.replace('.btn:hover{background:var(--wine);color:#fff3d4;transform:translateY(-1px)}','.btn:hover{background:linear-gradient(110deg,#1799a8,#c4933f,#1799a8);background-size:220% 100%;color:#fff;transform:translateY(-3px);box-shadow:0 8px 25px #1cc9e866}.btn:active{transform:translateY(0) scale(.97)}@keyframes shimmer{to{background-position:-220% 0}}')
+ s=s.replace('.clock{font:24px Arial;color:var(--gold2);direction:ltr}', '.clock{font:24px Arial;color:var(--gold2);direction:ltr;text-shadow:0 0 12px #43e8ff;animation:rgbHalo 4s linear infinite}')
+ s=s.replace('.cal{flex:0 0 70px;', '.cal{flex:0 0 70px;box-shadow:0 0 12px #43e8ff,0 0 25px #c94bff66;animation:rgbHalo 4s linear infinite;')
+ s=s.replace('@media(max-width:700px)', '@keyframes rgbHalo{0%,100%{box-shadow:0 0 10px #43e8ff,0 0 22px #43e8ff44}33%{box-shadow:0 0 10px #c94bff,0 0 22px #c94bff44}66%{box-shadow:0 0 10px #ffca52,0 0 22px #ffca5244}}@media(max-width:700px)')
+ s=s.replace('<style>','<style>@import url("https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&display=swap");')
+ p.write_text(s)
+inst=root/'install.sh'; t=inst.read_text().replace('roman-hero.jpg','pasargadae-hero.jpg'); inst.write_text(t)

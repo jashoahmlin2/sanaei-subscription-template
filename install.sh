@@ -28,9 +28,9 @@ curl --fail --silent --show-error --location --retry 3 --connect-timeout 10 "$RE
 
 "${SUDO[@]}" mkdir -p "$PREFIX"
 "${SUDO[@]}" mkdir -p "$PREFIX/assets"
-curl --fail --silent --show-error --location --retry 3 --connect-timeout 10 "$ASSET_RAW/assets/roman-hero.jpg" -o "$TMP.hero"
+curl --fail --silent --show-error --location --retry 3 --connect-timeout 10 "$ASSET_RAW/assets/pasargadae-hero.jpg" -o "$TMP.hero"
 [[ -s "$TMP.hero" ]] || { echo "خطا: دانلود asset تصویری ناموفق بود." >&2; exit 1; }
-"${SUDO[@]}" install -m 0644 "$TMP.hero" "$PREFIX/assets/roman-hero.jpg"
+"${SUDO[@]}" install -m 0644 "$TMP.hero" "$PREFIX/assets/pasargadae-hero.jpg"
 for name in index.html sub.html; do
   if [[ -f "$PREFIX/$name" ]]; then
     "${SUDO[@]}" cp -a "$PREFIX/$name" "$PREFIX/$name.bak.$(date +%Y%m%d%H%M%S)"
@@ -39,7 +39,7 @@ for name in index.html sub.html; do
 done
 "${SUDO[@]}" chmod 0755 "$PREFIX"
 
-[[ -s "$PREFIX/index.html" && -s "$PREFIX/sub.html" && -s "$PREFIX/assets/roman-hero.jpg" ]] || { echo "خطا: بررسی نصب ناموفق بود." >&2; exit 1; }
+[[ -s "$PREFIX/index.html" && -s "$PREFIX/sub.html" && -s "$PREFIX/assets/pasargadae-hero.jpg" ]] || { echo "خطا: بررسی نصب ناموفق بود." >&2; exit 1; }
 
 echo
 echo "تمپلت مدرن با موفقیت نصب شد: $PREFIX"
